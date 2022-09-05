@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
+use Session;
   
 
 class SignController extends Controller
@@ -24,16 +26,29 @@ class SignController extends Controller
   
         return redirect()->back();
     }
+    public function dash(){
+       
+        return view('dash');
+    }
     public function create(Request $data)
-    {
+    {   
+      
      
-        return User::create([
+        User::create([
             'name' => $data->fullname,
             'email' => $data->email,
             'password' => Hash::make($data->pass),
             'subdomain' => $data->subdomain,
             
         ]);
+
+        
+       
+        $maindomain = str_replace('://','://'.$data->subdomain.'.',config('app.url'));
+        return redirect($maindomain.RouteServiceProvider::HOME)->with(['name', $data->fullname, 'email', $data->email]);
+    
+
+        
      
     }
 }

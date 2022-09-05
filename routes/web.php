@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/signup', 'SignController@index');
+Route::get('/', 'SignController@index');
 Route::get('/signup/change', 'SignController@change')->name('changeLang');
 Route::post('/regist', 'SignController@create')->name('register');
+
+Route::get('/dash','SignController@dash')->name('dash');
 
