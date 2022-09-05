@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/signup', 'SignController@index');
+Route::get('/signup/change', 'SignController@change')->name('changeLang');
+Route::post('/regist', 'SignController@create')->name('register');
+

@@ -8,6 +8,10 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <!-- Styles -->
         <style>
@@ -65,36 +69,58 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+ 
+               
+                    <div class="row">
+                     
+                             <div class="form-floating mb-3">
+                                
+                                    <select class="form-control changeLang">
+                                        <option value="en" {{ session()->get('locale') == 'en' ? 'selected' : '' }}>English</option>
+                                        <option value="id" {{ session()->get('locale') == 'id' ? 'selected' : '' }} >Indonesia</option>
+                                        <option value="sp" {{ session()->get('locale') == 'sp' ? 'selected' : '' }}>Spanish</option>
+                                    </select>
+                          
+                             </div>
+                            <form method="POST" action="{{ route('register') }}">
+                                @csrf
+                              <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="fullname" id="floatingInput">
+                                    <label for="floatingInput">{{ __('login.Fullname') }}</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="floatingInput" name="email">
+                                <label for="floatingInput">{{ __('login.Email') }}</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingInput" name="subdomain" >
+                                <label for="floatingInput">{{ __('login.Subdomain') }}</label>
+                          </div>
+                              <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="floatingPassword" name="pass" >
+                                <label for="floatingPassword">{{ __('login.Password') }}</label>
+                              </div>
+                              <div class="d-grid">
+                                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign
+                                  Up</button>
+                              </div>
+                             
+                            </form>
+                        
+                    </div>
+                  
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+               
             </div>
         </div>
+        <script type="text/javascript">
+  
+            var url = "{{ route('changeLang') }}";
+          
+            $(".changeLang").change(function(){
+                window.location.href = url + "?lang="+ $(this).val();
+            });
+          
+        </script>
     </body>
 </html>
